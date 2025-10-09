@@ -13,12 +13,26 @@ fn main() {
     app.run().unwrap();
 }
 
+
+
+
+
 #[test]
 fn integer_check() {
     let t = 3;
     assert_eq!(check_about_integer(t), 8)
 }
+fn check_copy_integer(mut a: i32) ->i32 {
+    a = 3;
+    a
+}
 
+#[test]
+fn copy_integer() {
+    let mut a = 50;
+    check_copy_integer(a);
+    assert_eq!(a, 50);
+}
 fn check_about_integer(a: i32) -> i32 {
     let mut t = a;
     t = 5;
