@@ -12,3 +12,36 @@ fn main() {
     win.show();
     app.run().unwrap();
 }
+
+fn check_string_literal (s1: &mut String) {
+    let mut s = "Hello";
+    println!("{}", s);
+
+    s = "World";
+    println!("{}", s);
+
+
+
+    s1.push_str(", World!");
+    println!("{}", s1);
+}
+
+#[test]
+fn check_string() {
+    let mut s1 = String::from("Hello");
+    check_string_literal(&mut s1);
+    s1.push_str(", World!");
+    println!("{}", s1);
+}
+
+fn add_two_number<T>(a: T, b: T) -> T
+where
+    T: std::ops::Add<Output = T> + Copy,
+{
+    a + b
+}
+
+#[test]
+fn check_add_number() {
+    assert_eq!(add_two_number(1.3, 2.2), 3.5);
+}
