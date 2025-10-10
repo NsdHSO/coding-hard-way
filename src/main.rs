@@ -13,6 +13,22 @@ fn main() {
     app.run().unwrap();
 }
 
+fn dangling () {
+    let t;
+    {
+        let x = 5;
+        t = &x;
+    }
+    println!("{}", t);
+}
+
+#[test]
+fn check_dangling() {
+    dangling()
+}
+
+
+
 #[test]
 fn borrowing() {
     let t = 3;
