@@ -13,7 +13,15 @@ fn main() {
     app.run().unwrap();
 }
 
+#[test]
+fn borrowing() {
+    let t = 3;
+    let mut y = &t;
+    println!("{}", y);
 
+    y = &30;
+    println!("{}", y);
+}
 
 
 
