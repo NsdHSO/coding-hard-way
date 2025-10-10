@@ -14,10 +14,36 @@ fn main() {
 }
 
 #[cfg(test)]
+mod HasMapTest {
+    use std::collections::HashMap;
+
+    #[test]
+    fn creating_hash() {
+
+        let names = Vec::from(["John", "Jane", "Josh", "Jess", "Jake"]);
+        let grades = [1,2,34,5,5];
+
+        let student_grades : HashMap<&str,i32>= names.into_iter().zip(grades.into_iter()).collect();
+        println!("{:?}", student_grades);
+        
+    }
+
+}
+
+#[cfg(test)]
 mod StructsTest {
+    use std::fmt::{Display, Formatter};
+
+    #[derive(Debug)]
     struct Rectangle {
         width: u32,
         height: u32,
+    }
+
+    impl Display for Rectangle {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            write!(f, "({}, {})", self.width, self.height)
+        }
     }
 
     #[test]
@@ -33,16 +59,16 @@ mod StructsTest {
         print_height_mutable_and_modified(&mut r4);
         assert_eq!(r1.width, 2);
         assert_eq!(r4.height, 20);
-        assert_eq!(r3.height, 54)
+        assert_eq!(r3.height, 54);
+        println!("{}", r4);
     }
 
     fn print_height_immutable(rect: &Rectangle) {
         println!("{}", rect.height)
     }
     fn print_height_mutable_and_modified(rect: &mut Rectangle) {
-
         println!("{}", rect.height);
-        rect.height = 20 ;
+        rect.height = 20;
         println!("---- in function {}", rect.height);
     }
 }
