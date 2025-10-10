@@ -19,15 +19,27 @@ mod HasMapTest {
 
     #[test]
     fn creating_hash() {
-
         let names = Vec::from(["John", "Jane", "Josh", "Jess", "Jake"]);
-        let grades = [1,2,34,5,5];
+        let grades = [1, 2, 34, 5, 5];
 
-        let student_grades : HashMap<&str,i32>= names.into_iter().zip(grades.into_iter()).collect();
+        let mut student_grades: HashMap<&str, i32> =
+            names.into_iter().zip(grades.into_iter()).collect();
+
+        let mut borr_grades1 = &mut student_grades;
+        use_mut_borrow(&mut borr_grades1);
         println!("{:?}", student_grades);
-        
+        student_grades.insert("John", 100);
+        println!("{:?}", student_grades);
     }
 
+    fn use_borrow(t: &HashMap<&str, i32>) {
+        println!("{:?}", t);
+    }
+
+    fn use_mut_borrow(t: &mut HashMap<&str, i32>) {
+        t.insert("Jane", 1000);
+        println!("{:?}", t);
+    }
 }
 
 #[cfg(test)]
