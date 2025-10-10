@@ -13,8 +13,39 @@ fn main() {
     app.run().unwrap();
 }
 
+#[cfg(test)]
+mod StructsTest {
+    struct Rectangle {
+        width: u32,
+        height: u32,
+    }
 
+    #[test]
+    fn struct_rectangle() {
+        let r1 = Rectangle {
+            width: 2,
+            height: 54,
+        };
+        let r3 = Rectangle { width: 32, ..r1 };
+        let mut r4 = Rectangle { width: 32, ..r1 };
 
+        print_height_immutable(&r1);
+        print_height_mutable_and_modified(&mut r4);
+        assert_eq!(r1.width, 2);
+        assert_eq!(r4.height, 20);
+        assert_eq!(r3.height, 54)
+    }
+
+    fn print_height_immutable(rect: &Rectangle) {
+        println!("{}", rect.height)
+    }
+    fn print_height_mutable_and_modified(rect: &mut Rectangle) {
+
+        println!("{}", rect.height);
+        rect.height = 20 ;
+        println!("---- in function {}", rect.height);
+    }
+}
 
 #[cfg(test)]
 mod basic_test {
@@ -28,14 +59,12 @@ mod basic_test {
         println!("{}", y);
     }
 
-
-
     #[test]
     fn integer_check() {
         let t = 3;
         assert_eq!(check_about_integer(t), 8)
     }
-    fn check_copy_integer(mut a: i32) ->i32 {
+    fn check_copy_integer(mut a: i32) -> i32 {
         a = 3;
         a
     }
