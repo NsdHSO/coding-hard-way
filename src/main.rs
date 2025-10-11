@@ -14,6 +14,40 @@ fn main() {
 }
 
 #[cfg(test)]
+mod Trait {
+    pub trait Sound {
+        fn play(&self){
+            println!("I am playing!");
+        }
+    }
+
+    struct Bird;
+    struct Dog;
+    struct Cat;
+    struct Fish;
+
+    impl Sound for Bird {
+        fn play(&self) {
+            println!("Chirp chirp!")
+        }
+    }
+
+    const chicken: Bird = Bird;
+
+    fn play_sound<T: Sound>(sound: &T) {
+        println!("Playing sound");
+        sound.play();
+    }
+
+
+    #[test]
+    fn check_sound() {
+        play_sound(&chicken);
+    }
+
+}
+
+#[cfg(test)]
 mod HasMapTest {
     use std::collections::HashMap;
 
@@ -141,7 +175,7 @@ mod basic_test {
 
     fn add_two_number<T>(a: T, b: T) -> T
     where
-        T: std::ops::Add<Output = T> + Copy,
+        T: std::ops::Add<Output=T> + Copy,
     {
         a + b
     }
