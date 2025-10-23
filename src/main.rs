@@ -1,8 +1,8 @@
 mod events;
 mod ui;
 
-use std::fmt::{Debug, Formatter};
 use fltk::{app, prelude::*};
+use std::fmt::{Debug, Formatter};
 
 fn main() {
     let app = app::App::default();
@@ -185,8 +185,7 @@ mod basic_test {
     }
 }
 
-
-pub trait SoundCar:Debug {
+pub trait SoundCar: Debug {
     fn play(&self) {
         println!("I am playing!");
     }
@@ -201,8 +200,15 @@ pub trait Light {
     }
 }
 
-#[derive(Debug)]
-struct BMW {}
+struct BMW {
+    chair: bool,
+}
+
+impl Debug for BMW {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("BMW").field("chair", &self.chair).finish()
+    }
+}
 
 impl SoundCar for BMW {
     fn play(&self) {
@@ -223,16 +229,16 @@ mod check_implementation_trait {
     use super::*;
     #[test]
     fn check_implementation_trait_for_car() {
-        let m5 = BMW {};
+        let m5 = BMW { chair: true };
 
         play_sound(&m5);
         turn_on(&m5);
-        let checkSoundM5= check_return_type(&m5);
+        let checkSoundM5 = check_return_type(&m5);
         println!("{:?}", checkSoundM5);
     }
 
     fn check_return_type(sound: &impl SoundCar) -> impl SoundCar {
-        BMW {}
+        BMW { chair: true }
     }
 
     fn play_sound(sound: &impl SoundCar) {
