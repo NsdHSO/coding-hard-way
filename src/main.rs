@@ -1,6 +1,7 @@
 mod events;
 mod ui;
 
+use std::fmt::{Debug, Formatter};
 use fltk::{app, prelude::*};
 
 fn main() {
@@ -16,7 +17,7 @@ fn main() {
 #[cfg(test)]
 mod Trait {
     pub trait Sound {
-        fn play(&self){
+        fn play(&self) {
             println!("I am playing!");
         }
     }
@@ -39,12 +40,10 @@ mod Trait {
         sound.play();
     }
 
-
     #[test]
     fn check_sound() {
         play_sound(&chicken);
     }
-
 }
 
 #[cfg(test)]
@@ -175,7 +174,7 @@ mod basic_test {
 
     fn add_two_number<T>(a: T, b: T) -> T
     where
-        T: std::ops::Add<Output=T> + Copy,
+        T: std::ops::Add<Output = T> + Copy,
     {
         a + b
     }
@@ -183,5 +182,65 @@ mod basic_test {
     #[test]
     fn check_add_number() {
         assert_eq!(add_two_number(1.3, 2.2), 3.5);
+    }
+}
+
+
+pub trait SoundCar:Debug {
+    fn play(&self) {
+        println!("I am playing!");
+    }
+}
+
+pub trait Light {
+    fn on(&self) {
+        println!("Light is on!");
+    }
+    fn off(&self) {
+        println!("Light is off!");
+    }
+}
+
+#[derive(Debug)]
+struct BMW {}
+
+impl SoundCar for BMW {
+    fn play(&self) {
+        println!("Chirp chirp!")
+    }
+}
+
+impl Light for BMW {
+    fn on(&self) {
+        println!("BMW Light is on!")
+    }
+    fn off(&self) {
+        println!("BMW Light is off!")
+    }
+}
+#[cfg(test)]
+mod check_implementation_trait {
+    use super::*;
+    #[test]
+    fn check_implementation_trait_for_car() {
+        let m5 = BMW {};
+
+        play_sound(&m5);
+        turn_on(&m5);
+        let checkSoundM5= check_return_type(&m5);
+        println!("{:?}", checkSoundM5);
+    }
+
+    fn check_return_type(sound: &impl SoundCar) -> impl SoundCar {
+        BMW {}
+    }
+
+    fn play_sound(sound: &impl SoundCar) {
+        println!("Playing sound");
+        sound.play();
+    }
+    fn turn_on(sound: &(impl SoundCar + Light)) {
+        println!("Playing sound");
+        sound.play();
     }
 }
