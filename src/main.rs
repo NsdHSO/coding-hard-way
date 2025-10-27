@@ -250,3 +250,24 @@ mod check_implementation_trait {
         sound.play();
     }
 }
+
+#[cfg(test)]
+mod lifeTimeParameter {
+
+    #[test]
+    fn t_longest() {
+        let t = "Iancu";
+        let t2 = " Pauker";
+        let result = longest(t, t2);
+        println!("Longest from x and y is {:?}",result );
+    }
+
+    fn longest<'s>(x:&'s str, y: &'s str) -> &'s str{
+        if x.len() > y.len(){
+            x
+        }else{
+            y
+        }
+    }
+
+}
